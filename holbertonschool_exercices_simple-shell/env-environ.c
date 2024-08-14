@@ -1,5 +1,5 @@
 #include "simple_shell.h"
-
+#include <stdlib.h>
 
 /**
  * print_path_directories - Prints each directory in PATH
@@ -122,9 +122,12 @@ void print_environment(void)
 {
 	int i;
 
-	for (i = 0; environ[i] != NULL; i++)
+	char **environ;
+	char **env = environ;
+
+	for (i = 0; env[i] != NULL; i++)
 	{
-		printf("%s\n", environ[i]);
+		printf("%s\n", env[i]);
 	}
 }
 
@@ -141,6 +144,9 @@ void print_environment(void)
  */
 int main(int argc, char *argv[], char *env[])
 {
+	char **environ;
+	char **env = environ;
+
 	printf("Address of env: %p\n", (void *)env);
 	printf("Address of environ: %p\n", (void *)environ);
 

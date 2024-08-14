@@ -27,7 +27,6 @@
 
 /**GLOBAL VARIABLES*/
 
-extern char **environ; /**Environment variable array declaration*/
 
 
 
