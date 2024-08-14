@@ -13,6 +13,13 @@ char *find_cmd_in_path(char *cmd)
 	char *dir = strtok(path_dup, ":");
 	char *full_path = malloc(1024);
 
+	if (!full_path || !path_dup)
+	{
+		perror("Error allocating memory");
+		free(full_path);
+		return (NULL);
+	}
+
 	while (dir != NULL)
 	{
 		snprintf(full_path, 1024, "%s/%s", dir, cmd);

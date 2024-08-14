@@ -16,7 +16,6 @@ void exe_cmd(char **argv)
 	if (cmd_path == NULL)
 	{
 		fprintf(stderr, "Command not found: %s\n", argv[0]);
-		free(cmd_path);
 		return;
 	}
 
@@ -31,7 +30,7 @@ void exe_cmd(char **argv)
 	{
 		if (execve(cmd_path, argv, NULL) == -1)
 		{
-			perror("Error Shell");
+			perror("Error execve Shell");
 			free(cmd_path);
 			return;
 		}

@@ -36,7 +36,12 @@ int main(void)
 			int argc = token_cmd(command_line, argv);
 
 			if (argc > 0)
-				exe_cmd(argv);
+			{
+				if (find_cmd_in_path(argv[0]) != NULL)
+					exe_cmd(argv);
+				else
+					fprintf(stderr, "Command not found: %s\n", argv[0]);
+			}
 		}
 	}
 	free(command_line);
