@@ -13,20 +13,17 @@
 
 /** LIBRARIES */
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 
-
-
-
-/**GLOBAL VARIABLES*/
-
+/* Declare environ as an external variable */
+extern char **environ;
 
 
 
@@ -57,6 +54,8 @@ typedef struct PathList
 
 /** Buffer size for reading input */
 #define BUFFER_SIZE 1024
+/** Max PATH length */
+#define MAX_PATH_LENGTH 4096
 /** Max array size and delimiters for reading input using strtok*/
 #define MAX_WORDS 100
 #define DELIMITERS " \t\r\n\a"
@@ -64,46 +63,48 @@ typedef struct PathList
  * number of different child processes executed
  * trhought the command ls -l /tmp
  */
-#define NUM_CHILDREN 5
+/** #define NUM_CHILDREN 5 */
 
 
 
 
 /** FUNCTION PROTOTYPES */
 
-/** pid.c */
-/** int main(void); */
-
-/** ppid.c */
-/** int main(void); */
+/** main.c */
+int main(int ac, char **av);
 
 /** prompt.c */
-int main(int ac, char **av);
 int shell_prompt(void);
-char **split_string(const char *str);
 
 /** exec.c */
 void cmd_execute(char *cmd);
-int cmd_execute_fivechildren(void);
-void cmd_execute_inchildren(char *cmd);
-pid_t create_child(void);
-void wait_for_child(pid_t pid);
-
-/** shell.c */
-int check_file_in_path(const char *dir, const char *file);
-int search_incurirentpath(int argc, char **argv);
-
-/** env-environ.c */
-void print_path_directories(void);
-path_list *build_path_list(void);
-void free_path_list(path_list *head);
-int main(int argc, char *argv[], char *env[]);
-void print_environment(void);
+	
+/** fork.c */
+void cmd_fork_execute(char *command, char **args);i
 
 /** env-main.c */
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
+void print_environment(void);
+
+/** path.c */
+int search_incurrentpath(int argc, char **argv);
+int check_file_in_path(const char *dir, const char *file);
+
+
+/** wait.c
+void wait_for_child(pid_t pid);
+
+stat.c 
+int file_status(int argc, char **argv);
+
+env-environ.c
+void print_path_directories(void);
+path_list *build_path_list(void);
+void free_path_list(path_list *head);
+int environ_adress(int ac, char **av);
+**/
 
 
 

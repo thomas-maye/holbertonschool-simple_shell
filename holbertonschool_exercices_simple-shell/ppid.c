@@ -1,6 +1,4 @@
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "simple_shell.h"
 /**
  * main - PPID
  *

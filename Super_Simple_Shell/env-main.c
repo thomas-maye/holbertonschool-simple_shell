@@ -111,3 +111,18 @@ int _unsetenv(const char *name)
 
 	return (0);
 }
+
+/**
+ * print_environment - Function that prints all environment variables
+ * iterating through the global environ array to print them all
+ *
+ * Return: no return
+ */
+void print_environment(void)
+{
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		printf("%s\n", environ[i]);                                                                               }
+}

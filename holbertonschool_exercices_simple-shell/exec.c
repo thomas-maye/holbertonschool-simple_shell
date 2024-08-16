@@ -11,10 +11,12 @@
  * Executes command or prints error message to stderr if failed to.
  */
 void cmd_execute(char *cmd)
-{
+{	
 	char **args;
 	int i;
 
+	char **environ;
+        char **env = environ;
 
 	args = split_string(cmd);
 
@@ -24,7 +26,7 @@ void cmd_execute(char *cmd)
 		return;
 	}
 
-	if (execve(args[0], args, NULL) == -1)
+	if (execve(args[0], args, environ) == -1)
 	/** ! >> set NULL to envp for environement variable in simple shell**/
 	{
 		perror("Error executing command");
