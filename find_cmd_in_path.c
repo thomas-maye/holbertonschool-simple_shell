@@ -1,37 +1,45 @@
-#include "main.h"
+#include "simple_shell.h"
 
 /**
- * find_cmd_in_path - find the path in the different directory
- * @cmd: the commande that the user wants
- * Return: NULL after the command
+ * find_cmd_in_path - Searches for a command in the system's PATH.
+ * This function checks if the given command can be executed directly
+ * or by searching through the directories listed in the PATH environment
+ * variable. If the command is found, the full path to the executable is
+ * returned; otherwise, NULL is returned.
+ *
+ * @cmd: The command that the user wants to execute, which may or may not
+ *       include a full or relative path.
+ *
+ * Return: A dynamically allocated string containing the full path to the
+ *         command if found, or NULL if the command is not found in any
+ *         of the directories in the PATH.
  */
 
 char *find_cmd_in_path(char *cmd)
 {
 	char *path = getenv("PATH");
-	char *path_dup = strdup(path);
-	char *dir = strtok(path_dup, ":");
+	char *path_copy = strdup(path);
+	char *token = strtok(path_copy, ":");
 	char *full_path = malloc(1024);
 
-	if (!full_path || !path_dup)
+	if (access(cmd, X_OK) == 0)
 	{
-		perror("Error allocating memory");
-		free(full_path);
-		return (NULL);
+		free(path_copy);
+		return (strdup(cmd));
 	}
 
-	while (dir != NULL)
+	while (token != NULL)
 	{
-		snprintf(full_path, 1024, "%s/%s", dir, cmd);
+		snprintf(full_path, 1024, "%s/%s", token, cmd);
 		if (access(full_path, X_OK) == 0)
 		{
-			free(path_dup);
+			free(path_copy);
 			return (full_path);
 		}
-		dir = strtok(NULL, ":");
+		token = strtok(NULL, ":");
 	}
-	free(path_dup);
+
+	free(path_copy);
 	free(full_path);
 	return (NULL);
 }
-

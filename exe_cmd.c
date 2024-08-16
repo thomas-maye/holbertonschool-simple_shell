@@ -1,43 +1,54 @@
-#include "main.h"
+#include "simple_shell.h"
 
 /**
- * exe_cmd - Forks a child process and executes the command.
- * @argv: Array of arguments for the execve call.
+ * exe_cmd - Creates a child process to execute a command.
+ * This function forks the current process to create a child process.
+ * The child process then attempts to execute the command specified by the
+ * user. If the command is not found in the system's PATH, an error is
+ * displayed. The parent process waits for the child process to finish
+ * execution before continuing.
+ *
+ * @args: An array of arguments where the first element is the command and
+ *        the following elements are the command's arguments, all passed to
+ *        execve.
+ * @env:  An array of strings representing the environment variables, which
+ *        are passed to the execve system call.
+ *
+ * Return: This function does not return a value, as it is of type void.
  */
 
-void exe_cmd(char **argv)
+void exe_cmd(char **args, char **env)
 {
-	pid_t child_pid;
+	pid_t pid;
 	int status;
 	char *cmd_path;
 
-	cmd_path = find_cmd_in_path(argv[0]);
-
+	cmd_path = find_cmd_in_path(args[0]);
 	if (cmd_path == NULL)
 	{
-		fprintf(stderr, "Command not found: %s\n", argv[0]);
+		perror(args[0]);
 		return;
 	}
 
-	child_pid = fork();
-	if (child_pid == -1)
+	pid = fork();
+	if (pid == -1)
 	{
 		perror("Error fork");
 		free(cmd_path);
-		return;
+		exit(EXIT_FAILURE);
 	}
-	else if (child_pid == 0)
+	else if (pid == 0)
 	{
-		if (execve(cmd_path, argv, NULL) == -1)
+		if (execve(cmd_path, args, env) == -1)
 		{
-			perror("Error execve Shell");
+			perror("Error execve ./shell");
 			free(cmd_path);
-			return;
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		wait(&status);
-		free(cmd_path);
 	}
+	free(cmd_path);
 }

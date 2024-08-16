@@ -1,49 +1,25 @@
-#include "main.h"
+#include "simple_shell.h"
 
 /**
- * main - Main function to display prompt and execute commands.
- * Return: 0 on success.
+ * main - Entry point for the simple shell program.
+ * This function initializes the shell by displaying the prompt and waiting
+ * for user input to execute commands.
+ *
+ * @argc: Argument count, representing the number of command-line arguments.
+ *        This parameter is unused in this implementation.
+ * @argv: Argument vector, an array of strings representing the command-line
+ *        arguments. This parameter is unused in this implementation.
+ * @env:  Environment variables, passed to the shell for use during
+ *        command execution.
+ *
+ * Return: Always returns 0 to indicate successful execution.
  */
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-	char *command_line = NULL;
-	size_t len = 0;
-	ssize_t num_chars_read;
-	char *argv[1024];
+	(void)argc;
+	(void)argv;
 
-	while (1)
-	{
-		printf("#cisfun$ ");
-		num_chars_read = getline(&command_line, &len, stdin);
-
-		if (num_chars_read == -1)
-		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				break;
-			}
-			perror("getline");
-			break;
-		}
-
-		if (num_chars_read > 0 && command_line[num_chars_read - 1] == '\n')
-			command_line[num_chars_read - 1] = '\0';
-
-		if (command_line[0] != '\0')
-		{
-			int argc = token_cmd(command_line, argv);
-
-			if (argc > 0)
-			{
-				if (find_cmd_in_path(argv[0]) != NULL)
-					exe_cmd(argv);
-				else
-					fprintf(stderr, "Command not found: %s\n", argv[0]);
-			}
-		}
-	}
-	free(command_line);
+	new_shell_prompt(env);
 	return (0);
 }
