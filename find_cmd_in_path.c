@@ -30,7 +30,10 @@ char *find_cmd_in_path(char *cmd)
 
 	while (token != NULL)
 	{
-		snprintf(full_path, 1024, "%s/%s", token, cmd);
+		strcpy(full_path, token);
+		strcat(full_path, "/");
+		strcat(full_path, cmd);
+
 		if (access(full_path, X_OK) == 0)
 		{
 			free(path_copy);
