@@ -1,0 +1,111 @@
+.TH SIMPLE_SHELL 1 "August 18, 2024" "Version 1.0" "User Commands"
+
+.SH NAME
+simple_shell \- a basic command-line interpreter
+
+.SH SYNOPSIS
+.B simple_shell
+
+.SH DESCRIPTION
+.B simple_shell
+is a basic command-line interpreter that provides a prompt, reads user input, and executes commands. It supports basic command execution, environment variable printing, and shell termination.
+
+.SH OPTIONS
+	-h, --help
+		Displays this help message and exits.
+	-v, --version
+		Displays the program version and exits.
+
+
+.SH INVOCATION
+
+The GNU Compiler Collection, gcc, is used for compiling simple_shell with most of warnings and extra flags.
+
+.P
+.RS
+.B $ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+.P
+.RE
+When in interactive mode, the simple_shell operates by waiting for user input directly in the terminal. After you press the Enter key, the shell displays a prompt ('$'), indicating that it is ready to accept commands. At this point, you're in interactive mode, allowing you to type in commands and execute them by pressing Enter.
+.P
+.RS
+.B $ ./hsh
+.P
+.RE
+In non-interactive mode, users can provide shell scripts for simple_shell to execute, scripting directly to the shell for processing.
+.P
+.RS
+.B echo 'pwd' | ./hsh
+
+.SH FEATURES
+.IP \[bu] 2
+Command execution using fork and execve
+.IP \[bu]
+PATH resolution for commands
+.IP \[bu]
+Built-in 'exit' command to terminate the shell
+.IP \[bu]
+Built-in 'env' command to print environment variables
+
+.SH USAGE
+When launched, the shell displays a prompt:
+
+	Nico & Tom's Shell$
+
+The user can then enter commands, which will be executed by the shell.
+
+.SH EXECUTABLES
+
+Example of executables:
+.IP
+.br
+.\&
+.RS
+\&$ echo "I am an executable"
+.br
+\&"I am an executable"
+.br
+\&$
+
+.SH BUILT-IN COMMANDS
+.TP
+.B exit
+Terminates the shell.
+.TP
+.B env
+Prints all environment variables.
+
+.SH EXAMPLES
+.TP
+Execute a system command:
+.B Nico & Tom's Shell$ ls -l
+.TP
+Print environment variables:
+.B Nico & Tom's Shell$ env
+.TP
+Exit the shell:
+.B Nico & Tom's Shell$ exit
+
+.SH EXIT STATUS
+The shell returns 0 on successful execution and non-zero on failure.
+
+.SH ENVIRONMENT
+The shell uses the standard environment variables, particularly PATH for command resolution.
+
+.SH FILES
+.TP
+.I simple_shell.h
+Header file containing function prototypes and necessary includes.
+
+.SH BUGS
+No known bugs.
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2)
+
+.SH AUTHOR
+Thomas Mayé <9363@holbertonstudents.com> - Nicolas Martinez <9314@holbertonstudents.com>
