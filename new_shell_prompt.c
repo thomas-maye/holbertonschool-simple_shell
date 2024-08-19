@@ -14,14 +14,14 @@
 
 void new_shell_prompt(char **env)
 {
-	char *line = NULL;
+	char *line = NULL, **args;
 	size_t len = 0;
 	ssize_t nread;
-	char **args;
 
 	while (1)
 	{
-		printf("Nico & Tom's Shell$ ");
+		if (isatty(STDIN_FILENO))
+			printf("Nico & Tom's Shell$ ");
 		nread = getline(&line, &len, stdin);
 
 		if (nread == -1)
@@ -30,9 +30,14 @@ void new_shell_prompt(char **env)
 			exit(EXIT_SUCCESS);
 		}
 
-		if (line[nread - 1] == '\n')
+		if (nread > 0 && line[nread - 1] == '\n')
+		{
 			line[nread - 1] = '\0';
+			nread--;
+		}
 
+		if (nread == 0)
+			continue;
 		args = token_cmd(line);
 
 		if (strcmp(args[0], "exit") == 0)
@@ -42,7 +47,6 @@ void new_shell_prompt(char **env)
 			print_env(env);
 		else
 			exe_cmd(args, env);
-
 		free_args(args);
 	}
 	free(line);

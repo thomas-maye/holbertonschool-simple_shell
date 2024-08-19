@@ -23,7 +23,7 @@ void exe_cmd(char **args, char **env)
 	int status;
 	char *cmd_path;
 
-	cmd_path = find_cmd_in_path(args[0]);
+	cmd_path = find_cmd_in_path(args[0], env);
 	if (cmd_path == NULL)
 	{
 		perror(args[0]);
