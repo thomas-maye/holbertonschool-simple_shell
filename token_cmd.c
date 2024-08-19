@@ -16,7 +16,7 @@
 
 char **token_cmd(char *line_cmd)
 {
-	int bufsize = 64, position = 0;
+	int bufsize = 100, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char *));
 	char *token;
 
@@ -26,7 +26,7 @@ char **token_cmd(char *line_cmd)
 		exit(EXIT_FAILURE);
 	}
 
-	token = strtok(line_cmd, " ");
+	token = strtok(line_cmd, DELIMITERS);
 	while (token != NULL)
 	{
 		tokens[position] = strdup(token);
@@ -34,7 +34,7 @@ char **token_cmd(char *line_cmd)
 
 		if (position >= bufsize)
 		{
-			bufsize += 64;
+			bufsize += 100;
 			tokens = realloc(tokens, bufsize * sizeof(char *));
 			if (!tokens)
 			{
@@ -43,7 +43,7 @@ char **token_cmd(char *line_cmd)
 			}
 		}
 
-		token = strtok(NULL, " ");
+		token = strtok(NULL, DELIMITERS);
 	}
 	tokens[position] = NULL;
 	return (tokens);
