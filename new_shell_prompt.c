@@ -1,6 +1,28 @@
 #include "simple_shell.h"
 
 /**
+ * handle_cmd_prompt - Command that manages and processes orders related
+ * to env and exit
+ *
+ * @args: the array of argument
+ * @env: An array of strings representing the environment variables, which
+ *       can be accessed by the shell or passed to executed commands.
+ *
+ * Return : This function does not return any value, as it is of type void.
+ */
+
+void handle_cmd_prompt(char **args, char **env)
+{
+	if (strcmp(args[0], "exit") == 0)
+		handle_exit();
+
+	if (strcmp(args[0], "env") == 0)
+		print_env(env);
+	else
+		exe_cmd(args, env);
+}
+
+/**
  * new_shell_prompt - Displays the shell prompt and processes user input.
  * This function continuously displays a shell prompt, reads user input,
  * tokenizes the input into commands, and executes the appropriate function
@@ -21,7 +43,11 @@ void new_shell_prompt(char **env)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
+		{
 			printf("Nico & Tom's Shell$ ");
+			fflush(stdout);
+		}
+
 		nread = getline(&line, &len, stdin);
 
 		if (nread == -1)
@@ -40,13 +66,13 @@ void new_shell_prompt(char **env)
 			continue;
 		args = token_cmd(line);
 
-		if (strcmp(args[0], "exit") == 0)
-			handle_exit();
+		if (args[0] == NULL)
+		{
+			free_args(args);
+			continue;
+		}
 
-		if (strcmp(args[0], "env") == 0)
-			print_env(env);
-		else
-			exe_cmd(args, env);
+		handle_cmd_prompt(args, env);
 		free_args(args);
 	}
 	free(line);
