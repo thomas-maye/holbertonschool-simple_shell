@@ -16,7 +16,10 @@ void handle_cmd_prompt(char **args, char **env)
 	if (strcmp(args[0], "exit") == 0)
 		handle_exit();
 
-	if (strcmp(args[0], "env") == 0)
+	else if (strcmp(args[0], "man") == 0)
+		handle_man_cmd(args);
+
+	else if (strcmp(args[0], "env") == 0)
 		print_env(env);
 	else
 		exe_cmd(args, env);
