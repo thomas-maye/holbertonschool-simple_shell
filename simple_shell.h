@@ -31,5 +31,6 @@ void print_env(char **env);
 char **token_cmd(char *line);
 void free_args(char **args);
 void handle_exit(void);
+int count_tokens(char *line_cmd);
 
 #endif
