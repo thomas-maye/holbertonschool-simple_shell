@@ -1,6 +1,36 @@
 #include "simple_shell.h"
 
 /**
+ * count_tokens - Counts the number of tokens in the command line.
+ * @line_cmd: The command line input string to be tokenized.
+ *
+ * Return: The number of tokens.
+ */
+
+int count_tokens(char *line_cmd)
+{
+	int count = 0;
+	char *cp_line_cmd = strdup(line_cmd);
+	char *token;
+
+	if (!cp_line_cmd)
+	{
+		fprintf(stderr, "Error allocation\n");
+		exit(EXIT_FAILURE);
+	}
+
+	token = strtok(cp_line_cmd, DELIMITERS);
+	while (token != NULL)
+	{
+		count++;
+		token = strtok(NULL, DELIMITERS);
+	}
+
+	free(cp_line_cmd);
+	return (count);
+}
+
+/**
  * token_cmd - Splits the command line into individual arguments.
  * This function takes a command line input as a string and splits it
  * into individual tokens (arguments) based on spaces. The resulting
@@ -16,9 +46,10 @@
 
 char **token_cmd(char *line_cmd)
 {
-	int bufsize = 100, position = 0;
-	char **tokens = malloc(bufsize * sizeof(char *));
+	int num_tokens = count_tokens(line_cmd);
+	char **tokens = malloc((num_tokens + 1) * sizeof(char *));
 	char *token;
+	int position = 0;
 
 	if (!tokens)
 	{
@@ -30,22 +61,14 @@ char **token_cmd(char *line_cmd)
 	while (token != NULL)
 	{
 		tokens[position] = strdup(token);
-		position++;
-
-		if (position >= bufsize)
+		if (!tokens[position])
 		{
-			bufsize += 100;
-			tokens = realloc(tokens, bufsize * sizeof(char *));
-			if (!tokens)
-			{
-				fprintf(stderr, "Error allocation\n");
-				exit(EXIT_FAILURE);
-			}
+			fprintf(stderr, "Error allocation\n");
+			exit(EXIT_FAILURE);
 		}
-
+		position++;
 		token = strtok(NULL, DELIMITERS);
 	}
 	tokens[position] = NULL;
 	return (tokens);
 }
-
