@@ -49,7 +49,7 @@ void handle_man_cmd(char **args)
 		printf("Usage: man <command>\n");
 		return;
 	}
-	if (strcmp(args[1], "man") == 0)
+	if (strcmp(args[1], "hsh") == 0)
 	{
 		pid = fork();
 		if (pid == -1)
