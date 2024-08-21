@@ -12,10 +12,13 @@ is a basic command-line interpreter that provides a prompt, reads user input, an
 
 
 .SH OPTIONS
-	man <cmd> description of the command
+	man <cmd> to get a description of the command
 
 
 .SH INVOCATION
+
+The Manual page can be invocated by typing two command <hsh> or <./man_1_simple_shell>
+
 
 The GNU Compiler Collection, gcc, is used for compiling simple_shell with most of warnings and extra flags.
 
