@@ -14,17 +14,26 @@
 void handle_cmd_prompt(char **args, char **env)
 {
 	if (strcmp(args[0], "exit") == 0)
+	{
+		free_args(args);
 		handle_exit();
-
-	else if (strcmp(args[0], "man") == 0)
-		handle_man_cmd(args);
+	}
 
 	else if (strcmp(args[0], "env") == 0)
+	{
 		print_env(env);
-	else
-		exe_cmd(args, env);
-}
+	}
 
+	else if (strcmp(args[0], "man") == 0)
+	{
+		handle_man_cmd(args);
+	}
+
+	else
+	{
+		exe_cmd(args, env);
+	}
+}
 /**
  * new_shell_prompt - Displays the shell prompt and processes user input.
  * This function continuously displays a shell prompt, reads user input,
@@ -36,7 +45,6 @@ void handle_cmd_prompt(char **args, char **env)
  *
  * Return: This function does not return any value, as it is of type void.
  */
-
 void new_shell_prompt(char **env)
 {
 	char *line = NULL, **args;
@@ -78,5 +86,7 @@ void new_shell_prompt(char **env)
 		handle_cmd_prompt(args, env);
 		free_args(args);
 	}
+
 	free(line);
 }
+
