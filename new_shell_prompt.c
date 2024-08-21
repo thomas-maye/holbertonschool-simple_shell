@@ -16,7 +16,7 @@ void handle_cmd_prompt(char **args, char **env)
 	if (strcmp(args[0], "exit") == 0)
 	{
 		free_args(args);
-		handle_exit();
+		exit(EXIT_SUCCESS);
 	}
 
 	else if (strcmp(args[0], "env") == 0)
@@ -77,9 +77,10 @@ void new_shell_prompt(char **env)
 			continue;
 		args = token_cmd(line);
 
-		if (args[0] == NULL)
+		if (args == NULL || args[0] == NULL)
 		{
-			free_args(args);
+			if (args)
+				free_args(args);
 			continue;
 		}
 

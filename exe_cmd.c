@@ -22,11 +22,13 @@ void exe_cmd(char **args, char **env)
 	pid_t pid;
 	int status;
 	char *cmd_path;
+	static int line_number = 1;
 
 	cmd_path = find_cmd_in_path(args[0], env);
 	if (cmd_path == NULL)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
+		fprintf(stderr, "%s: %d: %s: not found\n", args[0], line_number, args[0]);
+		line_number++;
 		return;
 	}
 
@@ -51,4 +53,5 @@ void exe_cmd(char **args, char **env)
 		wait(&status);
 	}
 	free(cmd_path);
+	line_number++;
 }
