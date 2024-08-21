@@ -17,6 +17,9 @@ char *find_path_in_env(char **env)
 {
 	int i = 0;
 
+	if (env == NULL)
+		return (NULL);
+
 	for (; env[i] != NULL; i++)
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)

@@ -50,6 +50,7 @@ char **token_cmd(char *line_cmd)
 	char **tokens = malloc((num_tokens + 1) * sizeof(char *));
 	char *token;
 	int position = 0;
+	int i = 0;
 
 	if (!tokens)
 	{
@@ -64,6 +65,12 @@ char **token_cmd(char *line_cmd)
 		if (!tokens[position])
 		{
 			fprintf(stderr, "Error allocation\n");
+
+			for (; i < position; i++)
+			{
+				free(tokens[i]);
+			}
+			free(tokens);
 			exit(EXIT_FAILURE);
 		}
 		position++;
