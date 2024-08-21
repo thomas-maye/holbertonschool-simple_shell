@@ -1,20 +1,18 @@
 .TH SIMPLE_SHELL 1 "August 18, 2024" "Version 1.0" "User Commands"
 
 .SH NAME
-simple_shell \- a basic command-line interpreter
+simple_shell \- a basic command-line interpreter named 'hsh'.
 
 .SH SYNOPSIS
 .B simple_shell
 
 .SH DESCRIPTION
 .B simple_shell
-is a basic command-line interpreter that provides a prompt, reads user input, and executes commands. It supports basic command execution, environment variable printing, and shell termination.
+is a basic command-line interpreter that provides a prompt, reads user input, and executes commands. It supports basic command execution, environment variable printing ; in interactive and non interactive mode. See below further informtions.
+
 
 .SH OPTIONS
-	-h, --help
-		Displays this help message and exits.
-	-v, --version
-		Displays the program version and exits.
+	man <cmd> description of the command
 
 
 .SH INVOCATION
@@ -30,6 +28,22 @@ When in interactive mode, the simple_shell operates by waiting for user input di
 .P
 .RS
 .B $ ./hsh
+.br
+
+
+
+.nf
+For example:
+.RS
+julien@ubuntu:/# ./hsh
+($) /bin/ls
+sh main.c shell.c
+($)
+($) exit
+julien@ubuntu:/#
+.RE
+.fi
+
 .P
 .RE
 In non-interactive mode, users can provide shell scripts for simple_shell to execute, scripting directly to the shell for processing.
@@ -37,6 +51,22 @@ In non-interactive mode, users can provide shell scripts for simple_shell to exe
 .RS
 .B echo 'pwd' | ./hsh
 
+.nf
+For example:
+.RS
+julien@ubuntu:/# echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+julien@ubuntu:/# cat test_ls_2
+/bin/ls
+/bin/ls
+julien@ubuntu:/# cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+julien@ubuntu:/#
+.RE
+.fi
+
+.p
 .SH FEATURES
 .IP \[bu] 2
 Command execution using fork and execve
@@ -67,7 +97,10 @@ Example of executables:
 .br
 \&$
 
-.SH BUILT-IN COMMANDS
+.SH.IP
+.br
+.\&
+.RS BUILT-IN COMMANDS
 .TP
 .B exit
 Terminates the shell.
