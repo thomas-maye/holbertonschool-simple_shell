@@ -278,9 +278,7 @@ root@e6dde706a7d3:/workspace/Holberton/holbertonschool-simple_shell#
 
 ## Man page 📑
 
-The man page is written in the `man_1_simple_shell` file with a special layout. To display it, simply write `man hsh` in our new terminal.
-
-
+The man page is written in the `man_1_simple_shell` file with a special layout. To display it, simply write `man hsh` in our new terminal or falling that use `man ./man_1_simple_shell`.
 
 ## Memory leaks
 
