@@ -75,9 +75,7 @@ void handle_man_cmd(char **args)
 			exit(EXIT_FAILURE);
 		}
 		else
-		{
 			wait(&status);
-		}
 		return;
 	}
 	handle_builtin_cmd(args);

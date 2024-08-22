@@ -58,7 +58,6 @@ void new_shell_prompt(char **env)
 			printf("Nico & Tom's Shell$ ");
 			fflush(stdout);
 		}
-
 		nread = getline(&line, &len, stdin);
 
 		if (nread == -1)
@@ -87,7 +86,5 @@ void new_shell_prompt(char **env)
 		handle_cmd_prompt(args, env);
 		free_args(args);
 	}
-
 	free(line);
 }
-
